@@ -13,14 +13,60 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
+        <!-- Prefix Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="prefixname" :value="__('Prefix Name')" />
+            <select name="prefixname" class="block mt-1 w-full rounded border-gray-300" id="prefixname">
+                <option value="" @if(old('prefixname') == '' || $user->prefixname == '') selected @endif></option>
+                <option value="Mr" @if(old('prefixname') == 'Mr' || $user->prefixname == 'Mr') selected @endif>Mr</option>
+                <option value="Mrs" @if(old('prefixname') == 'Mrs' || $user->prefixname == 'Mrs') selected @endif>Mrs</option>
+                <option value="Ms" @if(old('prefixname') == 'Ms' || $user->prefixname == 'Ms') selected @endif>Ms</option>
+            </select>
+            <x-input-error :messages="$errors->get('prefixname')" class="mt-2" />
+        </div>
+
+        <!-- First Name -->
+
+        <div>
+            <x-input-label for="firstname" :value="__('First Name')" />
+            <x-text-input id="firstname" name="firstname" type="text" class="mt-1 block w-full" :value="old('firstname', $user->firstname)" required autofocus autocomplete="firstname" />
+            <x-input-error class="mt-2" :messages="$errors->get('firstname')" />
+        </div>
+
+        <!-- Middle Name -->
+
+        <div>
+            <x-input-label for="middlename" :value="__('Middle Name')" />
+            <x-text-input id="middlename" name="middlename" type="text" class="mt-1 block w-full" :value="old('middlename', $user->middlename)" autofocus autocomplete="middlename" />
+            <x-input-error class="mt-2" :messages="$errors->get('middlename')" />
+        </div>
+
+        <!-- Last Name -->
+
+        <div>
+            <x-input-label for="lastname" :value="__('Last Name')" />
+            <x-text-input id="lastname" name="lastname" type="text" class="mt-1 block w-full" :value="old('lastname', $user->lastname)" required autofocus autocomplete="lastname" />
+            <x-input-error class="mt-2" :messages="$errors->get('lastname')" />
+        </div>
+
+        <!-- Suffix Name -->
+
+        <div>
+            <x-input-label for="suffixname" :value="__('Suffix Name')" />
+            <x-text-input id="suffixname" name="suffixname" type="text" class="mt-1 block w-full" :value="old('suffixname', $user->suffixname)" autofocus autocomplete="suffixname" />
+            <x-input-error class="mt-2" :messages="$errors->get('suffixname')" />
+        </div>
+
+        <!-- Username -->
+
+        <div>
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)" required autofocus autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
         <div>
@@ -45,6 +91,13 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="mt-4">
+            <x-input-label for="profile_picture" :value="__('Profile Picture')" class="mb-2"/>
+            <x-photo-input :picture="old('avatar') ?? $user->avatar ?? asset('media/profile_photo/default/default.jpg')" />
+            <x-input-error :messages="$errors->get('photo')" class="mt-2"/>
         </div>
 
         <div class="flex items-center gap-4">

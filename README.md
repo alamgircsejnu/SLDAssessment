@@ -14,3 +14,5 @@ Please run the following commands after cloning the project repository.
   npm install
   npm run dev
 ```
+
+Happy Coding!
